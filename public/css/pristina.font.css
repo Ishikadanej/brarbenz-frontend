@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "PRISTINA";
+  src: url("/fonts/PRISTINA.woff");
+  src: local("PRISTINA"), url("/fonts/PRISTINA.woff") format("woff"),
+    url("/fonts/PRISTINA.ttf") format("truetype");
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_17281">Text with this font applied</p> */
+.fontsforweb_fontid_17281 {
+  font-family: "PRISTINA" !important;
+}
+
+/* Font downloaded from FontsForWeb.com */
