@@ -128,15 +128,15 @@ const Header = () => {
           <div className="container">
             <div className="row align-items-center">
               {/* Logo */}
-              <div className="col-xl-2 col-lg-2 col-md-4 col-4">
+              <div className="col-xl-2 col-lg-2 col-md-3 col-4">
                 <div className="logo">
                   <span
                     onClick={() => router.push("/")}
                     style={{ cursor: "pointer" }}
                   >
                     <img
-                      src="/img/logo/logo.png"
-                      className="img-fluid"
+                      src="/img/logo/logo1.png"
+                      className="img-fluid w-75"
                       alt="Logo"
                     />
                   </span>
@@ -180,7 +180,7 @@ const Header = () => {
                   </nav>
                 </div>
               </div>
-              <div className="col-xl-2 col-lg-2 col-md-7 col-6">
+              <div className="col-xl-2 col-lg-2 col-md-7 col-5">
                 <div className="header-left-icon header-left-icon4 d-flex align-items-center f-right">
                   <span
                     ref={searchWrapRef}

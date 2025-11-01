@@ -317,9 +317,7 @@ const TrendingProduct = () => {
                           <div className="product-wrapper mb-40">
                             <div className="pro-img mb-20">
                               <div
-                                onClick={() =>
-                                  router.push(`/shop/${product.id}`)
-                                }
+                                onClick={() => router.push(`/shop/${product.id}`)}
                                 style={{
                                   cursor: "pointer",
                                   backgroundImage: `url(${product.images?.[0]?.asset?.url})`,
@@ -327,11 +325,11 @@ const TrendingProduct = () => {
                                   backgroundPosition: "center",
                                   backgroundRepeat: "no-repeat",
                                   width: "100%",
-                                  paddingTop: "120%",
+                                  paddingTop: "130%",
                                   borderRadius: "4px",
                                 }}
-                                aria-label={product.title}
-                              />
+                                aria-label={product.title || ""}
+                              ></div>
                               <div className="product-action text-center">
                                 <button
                                   type="button"
@@ -340,11 +338,9 @@ const TrendingProduct = () => {
                                     border: "none",
                                     padding: 0,
                                     cursor: "pointer",
-                                    background: "transparent",
                                   }}
                                   onClick={() => handleAddToCart(product)}
                                 >
-                                  {/* <i className="fa-solid fa-cart-arrow-down"></i> */}
                                   <ShoppingCart />
                                 </button>
                               </div>
@@ -354,10 +350,8 @@ const TrendingProduct = () => {
                               <div className="pro-title">
                                 <h6>
                                   <div
+                                    onClick={() => router.push(`/shop/${product.id}`)}
                                     style={{ cursor: "pointer" }}
-                                    onClick={() =>
-                                      router.push(`/shop/${product.id}`)
-                                    }
                                   >
                                     {product.title}
                                   </div>
@@ -375,10 +369,7 @@ const TrendingProduct = () => {
                                 <div className="cart-icon">
                                   <button
                                     onClick={() =>
-                                      handleAddtoWishlist(
-                                        product,
-                                        !!isInWishlist
-                                      )
+                                      handleAddtoWishlist(product, isInWishlist)
                                     }
                                     style={{
                                       border: "none",

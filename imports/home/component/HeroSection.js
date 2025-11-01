@@ -87,7 +87,7 @@ const HeroSection = ({ data }) => {
           <div className="slider-four">
             <div className="container">
               <div className="row">
-                <div className="col-lg-8 col-12 custom-width-70">
+                <div className="custom-width-100">
                   <Slider
                     {...sliderSettings}
                     className="slider-active slider-active-four common-dots"
@@ -142,7 +142,7 @@ const HeroSection = ({ data }) => {
                 </div>
 
                 {/* Right: Desktop Banners */}
-                <div className="col-lg-4 custom-width-30 d-none d-lg-block">
+                {/* <div className="col-lg-4 custom-width-30 d-none d-lg-block">
                   <Grid>
                     <Banner
                       ref={(el) => (bannerRefs.current[0] = el)}
@@ -163,11 +163,11 @@ const HeroSection = ({ data }) => {
                       fixedHeight={bannerHeight}
                     />
                   </Grid>
-                </div>
+                </div> */}
               </div>
 
               {/* Mobile Banners */}
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-6 d-md-block d-lg-none">
                   <MobileBanner
                     ref={(el) => (mobileBannerRefs.current[0] = el)}
@@ -192,7 +192,7 @@ const HeroSection = ({ data }) => {
                     onClick={handleClick}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

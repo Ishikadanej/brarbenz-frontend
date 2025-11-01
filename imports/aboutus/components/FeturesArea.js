@@ -6,7 +6,7 @@ const FeturesArea = ({ data }) => {
   );
 
   return (
-    <section className="features-area gray-bg features-area-border p-relative pb-70 pt-100 box-105">
+    <section className="features-area gray-bg features-area-border p-relative pb-70 box-105">
       <div className="container features__wrapper">
         <div className="row">
           <div className="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">

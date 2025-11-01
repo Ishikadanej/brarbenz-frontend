@@ -12,9 +12,9 @@ const AboutUs = ({ data }) => {
     <div>
       <HeroAbout heroData={data} />
       <FeturesArea data={data} />
-      <TeamMember teamData={data} />
+      {/* <TeamMember teamData={data} /> */}
       <GetConsultant details={data} />
-      <Testimonial testimonials={data} />
+      {/* <Testimonial testimonials={data} /> */}
     </div>
   );
 };

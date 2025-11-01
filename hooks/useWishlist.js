@@ -23,7 +23,7 @@ export const useWishlist = (userId) => {
   return {
     data,
     isLoading,
-    isFetching,
+    isFetching, 
     error,
     refetch,
   };
