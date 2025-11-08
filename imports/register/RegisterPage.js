@@ -44,7 +44,7 @@ const RegisterPage = () => {
         <div className="w-100 p-4 p-sm-0" style={{ maxWidth: 420 }}>
           <div className="mb-4 d-flex align-items-center">
             <div className="bg-primary p-2 rounded me-2" />
-            <h5 className="mb-0 text-dark">Spdit</h5>
+            <h5 className="mb-0 text-dark">Bearbenz</h5>
           </div>
 
           <h2 className="fw-bold mb-2 text-dark">Sign up from here</h2>

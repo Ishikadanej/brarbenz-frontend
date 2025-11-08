@@ -1,53 +1,15 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../../public/css/animate.min.css";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
-import HeroSectionSkeleton from "./skeleton/HeroSectionSkeleton";
 
 const HeroSection = ({ data }) => {
-  const [activeSlide, setActiveSlide] = useState(0);
   const [slides, setSlides] = useState([]);
   const [banners, setBanners] = useState([]);
   const router = useRouter();
-  const bannerRefs = useRef([]);
-  const [bannerHeight, setBannerHeight] = useState(0);
-  const mobileBannerRefs = useRef([]);
-  const [mobileBannerHeight, setMobileBannerHeight] = useState(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mobileBannerRefs.current[0]) {
-      const observer = new ResizeObserver(() => {
-        const height = mobileBannerRefs.current[0].offsetHeight;
-        setMobileBannerHeight(height);
-      });
-      observer.observe(mobileBannerRefs.current[0]);
-      return () => observer.disconnect();
-    }
-  }, [banners]);
-
-  useEffect(() => {
-    if (bannerRefs.current[0]) {
-      const img = bannerRefs.current[0].querySelector("img");
-      if (img && !img.complete) {
-        img.onload = () => {
-          const height = bannerRefs.current[0].offsetHeight;
-          setBannerHeight(height);
-        };
-      } else {
-        const height = bannerRefs.current[0].offsetHeight;
-        setBannerHeight(height);
-      }
-    }
-  }, [banners]);
 
   useEffect(() => {
     if (!data) return;
@@ -58,21 +20,10 @@ const HeroSection = ({ data }) => {
     const promoSection = data?.sections?.find(
       (section) => section._type === "promoBanner"
     );
+
     setSlides(heroSection?.slides || []);
     setBanners(promoSection?.banners || []);
   }, [data]);
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: false,
-    arrows: true,
-    fade: true,
-    beforeChange: (_, next) => setActiveSlide(next),
-  };
 
   const handleClick = (link) => {
     if (link) router.push(link);
@@ -80,203 +31,76 @@ const HeroSection = ({ data }) => {
 
   return (
     <>
-      {!mounted || !data || data.length === 0 ? (
-        <HeroSectionSkeleton />
-      ) : (
-        <section className="hero-area position-relative ">
-          <div className="slider-four">
-            <div className="container">
-              <div className="row">
-                <div className="custom-width-100">
-                  <Slider
-                    {...sliderSettings}
-                    className="slider-active slider-active-four common-dots"
-                  >
-                    {slides.map((slide, index) => (
-                      <SlideWrapper
-                        key={index}
-                        background={slide?.image?.asset?.url}
-                        className="d-flex align-items-center"
-                      >
-                        <div className="hero-caption-four">
-                          <div
-                            className={`sli-offer mb-15 ${
-                              activeSlide === index ? "fadeInUp" : ""
-                            }`}
-                            style={{ animationDelay: "0.4s" }}
-                          >
-                            <span>{slide.discount || "-28%"}</span>
-                            <span>{slide.label || "Hot"}</span>
-                          </div>
-                          <h2
-                            className={`${
-                              activeSlide === index ? "fadeInUp" : ""
-                            }`}
-                            style={{ animationDelay: "0.4s" }}
-                          >
-                            {slide.title}
-                          </h2>
-                          <p
-                            className={`${
-                              activeSlide === index ? "fadeInUp" : ""
-                            }`}
-                            style={{ animationDelay: "0.6s" }}
-                          >
-                            {slide.subtitle}
-                          </p>
+      {/* Desktop / Tablet View */}
+      <HeroSections className="desktop-view">
+        {slides.map((slide, index) => (
+          <HeroSlide key={index} background={slide?.image?.asset?.url} />
+        ))}
+      </HeroSections>
 
-                          <button
-                            onClick={() => handleClick(slide.ctaLink)}
-                            className={`common-link ${
-                              activeSlide === index ? "fadeInUp" : ""
-                            }`}
-                            style={{ animationDelay: "0.8s" }}
-                          >
-                            {slide.ctaText || "Start Shopping"}{" "}
-                            <i className="fas fa-chevron-circle-right"></i>
-                          </button>
-                        </div>
-                      </SlideWrapper>
-                    ))}
-                  </Slider>
-                </div>
-
-                {/* Right: Desktop Banners */}
-                {/* <div className="col-lg-4 custom-width-30 d-none d-lg-block">
-                  <Grid>
-                    <Banner
-                      ref={(el) => (bannerRefs.current[0] = el)}
-                      image={banners?.[0]?.image?.asset?.url}
-                      title={banners?.[0]?.title}
-                      subtitle={banners?.[0]?.subtitle}
-                      link={banners?.[0]?.ctaLink}
-                      onClick={handleClick}
-                      fixedHeight={bannerHeight}
-                    />
-                    <Banner
-                      ref={(el) => (bannerRefs.current[1] = el)}
-                      image={banners?.[1]?.image?.asset?.url}
-                      title={banners?.[1]?.title}
-                      subtitle={banners?.[1]?.subtitle}
-                      link={banners?.[1]?.ctaLink}
-                      onClick={handleClick}
-                      fixedHeight={bannerHeight}
-                    />
-                  </Grid>
-                </div> */}
-              </div>
-
-              {/* Mobile Banners */}
-              {/* <div className="row">
-                <div className="col-md-6 d-md-block d-lg-none">
-                  <MobileBanner
-                    ref={(el) => (mobileBannerRefs.current[0] = el)}
-                    image={banners?.[0]?.image?.asset?.url}
-                    title={banners?.[0]?.title}
-                    subtitle={banners?.[0]?.subtitle}
-                    link={banners?.[0]?.ctaLink}
-                    isMobile
-                    fixedHeight={mobileBannerHeight}
-                    onClick={handleClick}
-                  />
-                </div>
-                <div className="col-md-6 d-md-block d-lg-none">
-                  <MobileBanner
-                    ref={(el) => (mobileBannerRefs.current[1] = el)}
-                    image={banners?.[1]?.image?.asset?.url}
-                    title={banners?.[1]?.title}
-                    subtitle={banners?.[1]?.subtitle}
-                    link={banners?.[1]?.ctaLink}
-                    isMobile
-                    fixedHeight={mobileBannerHeight}
-                    onClick={handleClick}
-                  />
-                </div>
-              </div> */}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Mobile View (below 768px) */}
+      <PromoSections className="mobile-view">
+        {banners.map((banner, index) => (
+          <PromoBanner key={index} onClick={() => handleClick(banner.redirectUrl)}>
+            <img
+              src={banner?.image?.asset?.url}
+              alt={`Promo banner ${index + 1}`}
+              loading="lazy"
+            />
+          </PromoBanner>
+        ))}
+      </PromoSections>
     </>
   );
 };
 
 export default HeroSection;
 
-const SlideWrapper = styled.div`
-  background-image: url(${(props) => props.background});
+
+const HeroSections = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const HeroSlide = styled.div`
+  position: relative;
+  width: 100%;
+  color: #fff;
+  text-align: left;
+  background-image: ${({ background }) => `url(${background})`};
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  min-height: 620px;
+  min-height: 100vh;
 
-  @media (min-width: 1200px) and (max-width: 1500px) {
-    min-height: 515px;
-  }
-  @media (max-width: 1200px) {
-    min-height: 425px;
+  &::after {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
   }
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+const PromoSections = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-const MobileBanner = React.forwardRef(
-  ({ image, title, subtitle, link, isMobile, fixedHeight, onClick }, ref) => {
-    const [imgLoaded, setImgLoaded] = useState(false);
+const PromoBanner = styled.div`
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 
-    return (
-      <div ref={ref} className={`sli-banner ${isMobile ? "mt-30" : "mb-30"}`}>
-        <img
-          src={image}
-          className="img-fluid"
-          alt={title}
-          onLoad={() => setImgLoaded(true)}
-          style={fixedHeight && imgLoaded ? { height: `${fixedHeight}px` } : {}}
-        />
-        <div className="sli-banner-text">
-          <h5 className="f-700">{title}</h5>
-          <span>{subtitle}</span>
-          <button
-            onClick={() => onClick(link)}
-            className="common-link"
-            style={{ background: "transparent", border: "none" }}
-          >
-            buy now <i className="fas fa-chevron-circle-right"></i>
-          </button>
-        </div>
-      </div>
-    );
+    &:hover {
+      transform: scale(1.03);
+    }
   }
-);
-
-const Banner = React.forwardRef(
-  ({ image, title, subtitle, link, isMobile, fixedHeight, onClick }, ref) => {
-    const [imgLoaded, setImgLoaded] = useState(false);
-
-    return (
-      <div ref={ref} className={`sli-banner ${isMobile ? "mt-30" : "mb-30"}`}>
-        <img
-          src={image}
-          className="img-fluid"
-          alt={title}
-          onLoad={() => setImgLoaded(true)}
-          style={fixedHeight && imgLoaded ? { height: `${fixedHeight}px` } : {}}
-        />
-        <div className="sli-banner-text">
-          <h5 className="f-700">{title}</h5>
-          <span>{subtitle}</span>
-          <button
-            onClick={() => onClick(link)}
-            className="common-link"
-            style={{ background: "transparent", border: "none" }}
-          >
-            buy now <i className="fas fa-chevron-circle-right"></i>
-          </button>
-        </div>
-      </div>
-    );
-  }
-);
+`;

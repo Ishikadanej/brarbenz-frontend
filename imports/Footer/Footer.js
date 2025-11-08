@@ -180,7 +180,7 @@ const Footer = () => {
               <div className="col-md-7 col-12">
                 <div className="copy-four-text">
                   <span>
-                    Copyright 2025 Spdit Theme. All Rights Reserved. Powered By
+                    Copyright 2025 Bearbenz Theme. All Rights Reserved. Powered By
                     Basictheme.
                   </span>
                 </div>

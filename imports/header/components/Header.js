@@ -127,144 +127,171 @@ const Header = () => {
         <div className="header-menu-two">
           <div className="container">
             <div className="row align-items-center">
-              {/* Logo */}
-              <div className="col-xl-2 col-lg-2 col-md-3 col-4">
-                <div className="logo">
-                  <span
-                    onClick={() => router.push("/")}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <img
-                      src="/img/logo/logo1.png"
-                      className="img-fluid w-75"
-                      alt="Logo"
-                    />
-                  </span>
-                </div>
-              </div>
-
-              {/* Desktop Menu */}
-              <div className="col-xl-8 col-lg-8 d-none d-lg-block">
-                <div className="main-menu main-menu-4 text-center">
-                  <nav id="mobile-menu-four">
-                    <ul>
-                      <li
-                        className={`has-dropdown ${
-                          pathname === "/" ? "active" : ""
-                        }`}
-                        onClick={() => router.push("/")}
-                      >
-                        <span>Home</span>
-                      </li>
-                      <li
-                        className={`${pathname === "/about" ? "active" : ""}`}
-                        onClick={() => router.push("/about")}
-                      >
-                        <span>About</span>
-                      </li>
-                      <li
-                        className={`mega-menu ${
-                          pathname === "/shop" ? "active" : ""
-                        }`}
-                        onClick={() => router.push("/shop")}
-                      >
-                        <span>Shop</span>
-                      </li>
-                      <li
-                        className={`${pathname === "/contact" ? "active" : ""}`}
-                        onClick={() => router.push("/contact")}
-                      >
-                        <span>Contact</span>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-              <div className="col-xl-2 col-lg-2 col-md-7 col-5">
-                <div className="header-left-icon header-left-icon4 d-flex align-items-center f-right">
-                  <span
-                    ref={searchWrapRef}
-                    className="search-btn nav-search search-trigger"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleSearch();
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Search size={22} className="d-none d-sm-block" />
-                    <Search size={18} className="d-block d-sm-none" />
-
-                    {isSearchOpen && (
-                      <SearchModal
-                        isSearchOpen={isSearchOpen}
-                        searchTerm={searchTerm}
-                        filteredProducts={filteredProducts}
-                        closeSearch={closeSearch}
-                        handleSearchClick={handleSearchClick}
-                        stopPropagation={(e) => e.stopPropagation()}
-                        handleSearchChange={handleSearchChange}
-                        router={router}
-                      />
-                    )}
-                  </span>
-                  <span
-                    ref={accountRef}
-                    style={{ cursor: "pointer", position: "relative" }}
-                    onClick={handleProfile}
-                  >
-                    <User size={22} className="d-none d-sm-block" />
-                    <User size={18} className="d-block d-sm-none" />
-                    {!isUserLoading && showAccount && !token && (
-                      <div
-                        className="account"
+              <div className="col-12">
+                <div
+                  className="header-flex"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "20px",
+                  }}
+                >
+                  <div className="main-menu main-menu-4 d-none d-lg-block">
+                    <nav id="desktop-menu">
+                      <ul
                         style={{
-                          position: "absolute",
-                          top: "30px",
-                          right: "-45px",
-                          zIndex: 1000,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          margin: 0,
+                          padding: 0,
+                          listStyle: "none",
                         }}
                       >
-                        <Account size={22} />
-                      </div>
-                    )}
-                  </span>
-                  {token && (
+                        <li
+                          className={pathname === "/" ? "active" : ""}
+                          onClick={() => router.push("/")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Home
+                        </li>
+                        <li
+                          className={pathname === "/about" ? "active" : ""}
+                          onClick={() => router.push("/about")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          About
+                        </li>
+                        <li
+                          className={pathname === "/shop" ? "active" : ""}
+                          onClick={() => router.push("/shop")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Shop
+                        </li>
+                        <li
+                          className={pathname === "/contact" ? "active" : ""}
+                          onClick={() => router.push("/contact")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Contact
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+
+                  <div className="logo text-center" style={{ flexShrink: 0 }}>
                     <span
-                      onClick={() => router.push("/wishlist")}
+                      onClick={() => router.push("/")}
                       style={{ cursor: "pointer" }}
                     >
-                      <Heart size={22} className="d-none d-sm-block" />
-                      <Heart size={18} className="d-block d-sm-none" />
+                      <img
+                        src="/img/logo/logo1.png"
+                        className="img-fluid"
+                        alt="Logo"
+                        style={{ width: "140px", height: "auto" }}
+                      />
                     </span>
-                  )}
-                  <span
-                    onClick={() => router.push("/cart")}
-                    style={{ cursor: "pointer", position: "relative" }}
-                  >
-                    <ShoppingCart size={22} className="d-none d-sm-block" />
-                    <ShoppingCart size={18} className="d-block d-sm-none" />
-                    {(token ? count : cartCount) > 0 && (
-                      <span style={{ color: "white" }} className="cartCount">
-                        {token ? count : cartCount}
+                  </div>
+
+
+                  <div className="header-left-icon header-left-icon4 d-flex align-items-center justify-content-end">
+                    <span
+                      ref={searchWrapRef}
+                      className="search-btn nav-search search-trigger"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleSearch();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <Search size={22} className="d-none d-sm-block" />
+                      <Search size={18} className="d-block d-sm-none" />
+                      {isSearchOpen && (
+                        <SearchModal
+                          isSearchOpen={isSearchOpen}
+                          searchTerm={searchTerm}
+                          filteredProducts={filteredProducts}
+                          closeSearch={closeSearch}
+                          handleSearchClick={handleSearchClick}
+                          stopPropagation={(e) => e.stopPropagation()}
+                          handleSearchChange={handleSearchChange}
+                          router={router}
+                        />
+                      )}
+                    </span>
+
+                    <span
+                      ref={accountRef}
+                      style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
+                      onClick={handleProfile}
+                    >
+                      <User size={22} />
+                      {!isUserLoading && showAccount && !token && (
+                        <div
+                          className="account"
+                          style={{
+                            position: "absolute",
+                            top: "30px",
+                            right: "-45px",
+                            zIndex: 1000,
+                          }}
+                        >
+                          <Account size={22} />
+                        </div>
+                      )}
+                    </span>
+
+                    {token && (
+                      <span
+                        onClick={() => router.push("/wishlist")}
+                        style={{ cursor: "pointer", marginLeft: "20px" }}
+                      >
+                        <Heart size={22} />
                       </span>
                     )}
-                  </span>
-                </div>
-              </div>
-              <div className="col-2 col-md-1 d-block d-lg-none">
-                <div className="hamburger-menu text-right">
-                  <span
-                    onClick={handleMobileMenuOpen}
-                    className="menu-trigger-button"
-                  >
-                    <i className="fa-solid fa-bars fa-xs" />
-                  </span>
+
+                    <span
+                      onClick={() => router.push("/cart")}
+                      style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
+                    >
+                      <ShoppingCart size={22} />
+                      {(token ? count : cartCount) > 0 && (
+                        <span
+                          style={{
+                            color: "white",
+                            backgroundColor: "#000",
+                            borderRadius: "50%",
+                            padding: "2px 6px",
+                            fontSize: "12px",
+                            position: "absolute",
+                            top: "-5px",
+                            right: "-10px",
+                          }}
+                        >
+                          {token ? count : cartCount}
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="d-block d-lg-none">
+                    <div className="hamburger-menu text-right">
+                      <span
+                        onClick={handleMobileMenuOpen}
+                        className="menu-trigger-button"
+                      >
+                        <i className="fa-solid fa-bars fa-xs" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </header>
+
       <aside className={`slide-bar ${isMenuOpen ? "show" : ""}`}>
         <div className="close-mobile-menu">
           <span onClick={handleMobileMenuClose} className="menu-close-button">
@@ -325,3 +352,6 @@ const Header = () => {
 };
 
 export default Header;
+
+
+

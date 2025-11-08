@@ -1402,7 +1402,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .search-wrap {
   position: fixed;
-  right: 13%;
+  right: 0%;
   height: 50px;
   z-index: 9999;
   display: flex;
@@ -7621,3 +7621,4 @@ input:-webkit-autofill:focus {
     width: 0;
   }
 }
+
