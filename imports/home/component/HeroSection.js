@@ -44,7 +44,7 @@ const HeroSection = ({ data }) => {
       {/* Mobile View (below 768px) */}
       <PromoSections className="mobile-view">
         {banners.map((banner, index) => (
-          <PromoBanner key={index} onClick={() => handleClick(banner.redirectUrl)}>
+          <PromoBanner key={index} onClick={() => handleClick(banner.buttonLink)}>
             <img
               src={banner?.image?.asset?.url}
               alt={`Promo banner ${index + 1}`}
@@ -59,13 +59,13 @@ const HeroSection = ({ data }) => {
 
 export default HeroSection;
 
-
 const HeroSections = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  @media (max-width: 768px) {
+  /* Hide on mobile + tablet */
+  @media (max-width: 1024px) {
     display: none;
   }
 `;
@@ -88,7 +88,9 @@ const HeroSlide = styled.div`
 
 const PromoSections = styled.div`
   display: none;
-  @media (max-width: 768px) {
+
+  /* Show only on mobile + tablet */
+  @media (max-width: 1024px) {
     display: flex;
     flex-direction: column;
   }
