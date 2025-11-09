@@ -13,8 +13,8 @@ const ContactInfo = () => {
                 </div>
                 <div className="contact__info-content">
                   <h3>Our Address</h3>
-                  <span>24 Broadcast Drive Charlotte</span>
-                  <span> NC 28202, USA</span>
+                  <span>SHOP-5, PANCHSHILA SKY, Chapprabhatta, Ganeshpura</span>
+                  <span> Surat, Gujarat, India</span>
                 </div>
               </div>
             </div>
@@ -25,8 +25,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="contact__info-content">
                   <h3>Phone Number</h3>
-                  <span>(+06) 325 - 635 - 3265 </span>
-                  <span>(+02) 653 - 352 - 6524</span>
+                  <span>(+91) 99 79 79 66 88 </span>
                 </div>
               </div>
             </div>
@@ -37,8 +36,7 @@ const ContactInfo = () => {
                 </div>
                 <div className="contact__info-content">
                   <h3>Email Support</h3>
-                  <span>patient@basicme.com</span>
-                  <span>info@basicme.com</span>
+                  <span>contact@bearbenz.com</span>
                 </div>
               </div>
             </div>

@@ -149,33 +149,35 @@ const Header = () => {
                           listStyle: "none",
                         }}
                       >
-                        <li
-                          className={pathname === "/" ? "active" : ""}
-                          onClick={() => router.push("/")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Home
+                        <li className={pathname === "/shop?category=shirts" ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop?category=shirts");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            SHIRTS
+                          </span>
                         </li>
-                        <li
-                          className={pathname === "/about" ? "active" : ""}
-                          onClick={() => router.push("/about")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          About
+                        <li className={pathname === "/shop?category=tshirts" ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop?category=tshirts");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            TSHIRTS
+                          </span>
                         </li>
-                        <li
-                          className={pathname === "/shop" ? "active" : ""}
-                          onClick={() => router.push("/shop")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Shop
-                        </li>
-                        <li
-                          className={pathname === "/contact" ? "active" : ""}
-                          onClick={() => router.push("/contact")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Contact
+                        <li className={pathname === "/shop" ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            SHOP ALL
+                          </span>
                         </li>
                       </ul>
                     </nav>
@@ -190,7 +192,8 @@ const Header = () => {
                         src="/img/logo/logo1.png"
                         className="img-fluid"
                         alt="Logo"
-                        style={{ width: "140px", height: "auto" }}
+                        style={{ width: "100px", height: "auto" }}
+                        
                       />
                     </span>
                   </div>
@@ -298,26 +301,27 @@ const Header = () => {
             <i className="fa-solid fa-times" />
           </span>
         </div>
+        
         <nav className="side-mobile-menu">
           <ul id="mobile-menu-active">
-            <li className={pathname === "/" ? "active" : ""}>
+            <li className={pathname === "/shop?category=shirts" ? "active" : ""}>
               <span
                 onClick={() => {
-                  router.push("/");
+                  router.push("/shop?category=shirts");
                   handleMobileMenuClose();
                 }}
               >
-                Home
+                SHIRTS
               </span>
             </li>
-            <li className={pathname === "/about" ? "active" : ""}>
+            <li className={pathname === "/shop?category=tshirts" ? "active" : ""}>
               <span
                 onClick={() => {
-                  router.push("/about");
+                  router.push("/shop?category=tshirts");
                   handleMobileMenuClose();
                 }}
               >
-                About
+                TSHIRTS
               </span>
             </li>
             <li className={pathname === "/shop" ? "active" : ""}>
@@ -327,17 +331,7 @@ const Header = () => {
                   handleMobileMenuClose();
                 }}
               >
-                Shop
-              </span>
-            </li>
-            <li className={pathname === "/contact" ? "active" : ""}>
-              <span
-                onClick={() => {
-                  router.push("/contact");
-                  handleMobileMenuClose();
-                }}
-              >
-                Contact
+                SHOP ALL
               </span>
             </li>
           </ul>

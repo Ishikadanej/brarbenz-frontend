@@ -14,6 +14,7 @@ const HeroSection = ({ data }) => {
   useEffect(() => {
     if (!data) return;
 
+    console.log("🔥 HeroSection incoming data:", data);
     const heroSection = data?.sections?.find(
       (section) => section._type === "heroBanner"
     );
@@ -34,7 +35,9 @@ const HeroSection = ({ data }) => {
       {/* Desktop / Tablet View */}
       <HeroSections className="desktop-view">
         {slides.map((slide, index) => (
-          <HeroSlide key={index} background={slide?.image?.asset?.url} />
+          <HeroSlide key={index} onClick={() => handleClick(slide?.ctaLink)} background={slide?.image?.asset?.url} style={{
+            cursor: slide?.ctaLink ? "pointer" : "default",
+          }} />
         ))}
       </HeroSections>
 
