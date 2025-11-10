@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import "rc-slider/assets/index.css";
 import useProductsStore from "../../../../Zustand/productStore";
 import { client, PRODUCTS_QUERY } from "../../../../lib/sanity";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "../../../pagination/Pagination";
 import useCartStore from "../../../../Zustand/cartStore";
 import { useRecentView } from "../../../../hooks/useRecentView";
@@ -58,6 +58,8 @@ const ShopHero = () => {
   const { priceData } = usePrice(minPrice, maxPrice);
   const isMobile = useIsMobile();
   const [pendingRange, setPendingRange] = useState([0, 0]);
+  const searchParams = useSearchParams();
+
 
   useEffect(() => {
     if (productData?.[0]?.products?.length) {
@@ -278,63 +280,57 @@ const ShopHero = () => {
     updateUrl({ size, page: 1 });
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const sizeFromUrl = params.get("size");
-    const categoryFromUrl = params.get("category");
-    const maxPriceFromUrl = params.get("maxPrice");
-    const minPriceFromUrl = params.get("minPrice");
-    const pageFromUrl = params.get("page");
+useEffect(() => {
+  const categoryFromUrl = searchParams.get("category");
+  const sizeFromUrl = searchParams.get("size");
+  const minPriceFromUrl = searchParams.get("minPrice");
+  const maxPriceFromUrl = searchParams.get("maxPrice");
+  const pageFromUrl = searchParams.get("page");
 
-    const init = async () => {
-      let filteredProducts = products;
-      if (categoryFromUrl && products.length > 0) {
-        setSelectedCat(categoryFromUrl);
+  let filteredProducts = products;
 
-        filteredProducts = filteredProducts.filter(
-          (p) =>
-            p.category &&
-            p.category.title.toLowerCase().trim() ===
-              categoryFromUrl.toLowerCase().trim()
-        );
-      }
+  if (categoryFromUrl && products.length > 0) {
+    setSelectedCat(categoryFromUrl);
+    filteredProducts = filteredProducts.filter(
+      (p) =>
+        p.category &&
+        p.category.title.toLowerCase().trim() ===
+          categoryFromUrl.toLowerCase().trim()
+    );
+  }
 
-      if (sizeFromUrl && products.length > 0) {
-        setSelectedSize(sizeFromUrl);
+  if (sizeFromUrl && products.length > 0) {
+    setSelectedSize(sizeFromUrl);
+    filteredProducts = filteredProducts.filter(
+      (p) =>
+        p.sizes &&
+        p.sizes.some(
+          (s) =>
+            s.title.toLowerCase().trim() === sizeFromUrl.toLowerCase().trim()
+        )
+    );
+  }
 
-        filteredProducts = filteredProducts.filter(
-          (p) =>
-            p.sizes &&
-            p.sizes.some(
-              (s) =>
-                s.title.toLowerCase().trim() ===
-                sizeFromUrl.toLowerCase().trim()
-            )
-        );
-      }
+  if ((minPriceFromUrl || maxPriceFromUrl) && products.length > 0) {
+    const min = Number(minPriceFromUrl) || priceRange[0];
+    const max = Number(maxPriceFromUrl) || priceRange[1];
 
-      if ((minPriceFromUrl || maxPriceFromUrl) && products.length > 0) {
-        const min = Number(minPriceFromUrl) || priceRange[0];
-        const max = Number(maxPriceFromUrl) || priceRange[1];
+    setPendingRange([min, max]);
+    setMinPrice(min);
+    setMaxPrice(max);
 
-        setPendingRange([min, max]);
-        setMinPrice(min);
-        setMaxPrice(max);
+    filteredProducts = filteredProducts.filter(
+      (p) => p.price >= min && p.price <= max
+    );
+  }
 
-        filteredProducts = filteredProducts.filter(
-          (p) => p.price >= min && p.price <= max
-        );
-      }
+  if (pageFromUrl) {
+    setPage(parseInt(pageFromUrl, 10));
+  }
 
-      setFilterProducts(filteredProducts);
+  setFilterProducts(filteredProducts);
+}, [searchParams, products,priceRange]); // 👈 Important: watch searchParams here!
 
-      if (pageFromUrl) {
-        setPage(parseInt(pageFromUrl, 10));
-      }
-    };
-
-    init();
-  }, [products, priceRange]);
 
   return (
     <section className="shop-sidebar pt-75 " style={{ position: "relative" }}>

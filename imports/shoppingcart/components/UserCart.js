@@ -121,7 +121,7 @@ const UserCart = () => {
         <EmptyCart />
       ) : (
         <div>
-          <section className="cart-area pt-100 pb-100">
+          <Section>
             <div className="container">
               <div className="row">
                 <div className="col-12">
@@ -330,7 +330,7 @@ const UserCart = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </Section>
         </div>
       )}
     </>
@@ -338,3 +338,11 @@ const UserCart = () => {
 };
 
 export default UserCart;
+const Section = styled.div`
+padding-top: 100px;
+padding-bottom: 100px;
+@media (max-width: 575px) {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+`;

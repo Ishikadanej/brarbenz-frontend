@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 import useProductsStore from "../../../Zustand/productStore";
 import useCartStore from "../../../Zustand/cartStore";
@@ -22,6 +22,8 @@ const Header = () => {
   const { products } = useProductsStore();
   const { cartCount, count } = useCartStore();
   const { token, isUserLoading } = useAuth();
+const searchParams = useSearchParams();
+const category = searchParams.get("category");
 
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(true);
@@ -149,36 +151,39 @@ const Header = () => {
                           listStyle: "none",
                         }}
                       >
-                        <li className={pathname === "/shop?category=shirts" ? "active" : ""}>
-                          <span
-                            onClick={() => {
-                              router.push("/shop?category=shirts");
-                              handleMobileMenuClose();
-                            }}
-                          >
-                            SHIRTS
-                          </span>
-                        </li>
-                        <li className={pathname === "/shop?category=tshirts" ? "active" : ""}>
-                          <span
-                            onClick={() => {
-                              router.push("/shop?category=tshirts");
-                              handleMobileMenuClose();
-                            }}
-                          >
-                            TSHIRTS
-                          </span>
-                        </li>
-                        <li className={pathname === "/shop" ? "active" : ""}>
-                          <span
-                            onClick={() => {
-                              router.push("/shop");
-                              handleMobileMenuClose();
-                            }}
-                          >
-                            SHOP ALL
-                          </span>
-                        </li>
+<li className={category === "shirts" ? "active" : ""}>
+  <span
+    onClick={() => {
+      router.push("/shop?category=shirts&page=1");
+      handleMobileMenuClose();
+    }}
+  >
+    SHIRTS
+  </span>
+</li>
+
+<li className={category === "tshirts" ? "active" : ""}>
+  <span
+    onClick={() => {
+      router.push("/shop?category=tshirts&page=1");
+      handleMobileMenuClose();
+    }}
+  >
+    TSHIRTS
+  </span>
+</li>
+
+<li className={!category ? "active" : ""}>
+  <span
+    onClick={() => {
+      router.push("/shop");
+      handleMobileMenuClose();
+    }}
+  >
+    SHOP ALL
+  </span>
+</li>
+
                       </ul>
                     </nav>
                   </div>
@@ -304,7 +309,7 @@ const Header = () => {
         
         <nav className="side-mobile-menu">
           <ul id="mobile-menu-active">
-            <li className={pathname === "/shop?category=shirts" ? "active" : ""}>
+            <li className={category === "/shop?category=shirts" ? "active" : ""}>
               <span
                 onClick={() => {
                   router.push("/shop?category=shirts");
@@ -314,7 +319,7 @@ const Header = () => {
                 SHIRTS
               </span>
             </li>
-            <li className={pathname === "/shop?category=tshirts" ? "active" : ""}>
+            <li className={category === "/shop?category=tshirts" ? "active" : ""}>
               <span
                 onClick={() => {
                   router.push("/shop?category=tshirts");
@@ -324,7 +329,7 @@ const Header = () => {
                 TSHIRTS
               </span>
             </li>
-            <li className={pathname === "/shop" ? "active" : ""}>
+            <li className={!category ? "active" : ""}>
               <span
                 onClick={() => {
                   router.push("/shop");

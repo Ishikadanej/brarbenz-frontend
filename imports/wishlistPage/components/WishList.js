@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useWishlist } from "../../../hooks/useWishlist";
 import EmptyWishlist from "./EmptyWishlist";
 import WishlistSkeleton from "./WishlistSkeleton";
+import styled from "styled-components";
 
 const WishList = () => {
   const { wishlist, setWishlist, openCart } = useCartStore();
@@ -71,7 +72,7 @@ const WishList = () => {
       {isEmpty ? (
         <EmptyWishlist />
       ) : (
-        <section className="cart-area pt-100 pb-100">
+        <Section>
           <div className="container">
             <div className="row">
               <div className="col-12">
@@ -216,10 +217,19 @@ const WishList = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Section>
       )}
     </div>
   );
 };
 
 export default WishList;
+
+const Section = styled.div`
+padding-top: 100px;
+padding-bottom: 100px;
+@media (max-width: 575px) {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+`;
