@@ -8,6 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import useCartStore from "../../../Zustand/cartStore";
 import EmptyCart from "./EmptyCart";
 import CartSkeleton from "./CartSkeleton";
+import styled from "styled-components";
 
 const UserCart = () => {
   const router = useRouter();
@@ -121,7 +122,7 @@ const UserCart = () => {
         <EmptyCart />
       ) : (
         <div>
-          <section className="cart-area pt-100 pb-100">
+          <Section>
             <div className="container">
               <div className="row">
                 <div className="col-12">
@@ -330,7 +331,7 @@ const UserCart = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </Section>
         </div>
       )}
     </>
@@ -338,3 +339,11 @@ const UserCart = () => {
 };
 
 export default UserCart;
+const Section = styled.div`
+padding-top: 70px;
+padding-bottom: 70px;
+@media (max-width: 575px) {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+`;

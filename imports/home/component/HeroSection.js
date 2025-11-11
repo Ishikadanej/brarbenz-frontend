@@ -9,11 +9,14 @@ import { useRouter } from "next/navigation";
 const HeroSection = ({ data }) => {
   const [slides, setSlides] = useState([]);
   const [banners, setBanners] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (!data) return;
 
+    console.log("🔥 HeroSection incoming data:", data);
     const heroSection = data?.sections?.find(
       (section) => section._type === "heroBanner"
     );
@@ -25,44 +28,65 @@ const HeroSection = ({ data }) => {
     setBanners(promoSection?.banners || []);
   }, [data]);
 
+  // Client-side width detection to avoid CSS/SSR display mismatch
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    // run once and set mounted flag
+    handleResize();
+    setMounted(true);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleClick = (link) => {
     if (link) router.push(link);
   };
 
   return (
     <>
-      {/* Desktop / Tablet View */}
-      <HeroSections className="desktop-view">
-        {slides.map((slide, index) => (
-          <HeroSlide key={index} background={slide?.image?.asset?.url} />
-        ))}
-      </HeroSections>
-
-      {/* Mobile View (below 768px) */}
-      <PromoSections className="mobile-view">
-        {banners.map((banner, index) => (
-          <PromoBanner key={index} onClick={() => handleClick(banner.redirectUrl)}>
-            <img
-              src={banner?.image?.asset?.url}
-              alt={`Promo banner ${index + 1}`}
-              loading="lazy"
+      {/* Desktop / Tablet View - render only when not mobile */}
+      {!isMobile && (
+        <HeroSections className="desktop-view">
+          {slides.map((slide, index) => (
+            <HeroSlide
+              key={index}
+              onClick={() => handleClick(slide?.ctaLink)}
+              background={slide?.image?.asset?.url}
+              style={{ cursor: slide?.ctaLink ? "pointer" : "default" }}
             />
-          </PromoBanner>
-        ))}
-      </PromoSections>
+          ))}
+        </HeroSections>
+      )}
+
+      {/* Mobile View (show only on mobile widths) */}
+      {mounted && isMobile && (
+        <PromoSections className="mobile-view">
+          {banners.map((banner, index) => (
+            <PromoBanner key={index} onClick={() => handleClick(banner.buttonLink)}>
+              <img src={banner?.image?.asset?.url} alt={`Promo banner ${index + 1}`} loading="lazy" />
+            </PromoBanner>
+          ))}
+        </PromoSections>
+      )}
     </>
   );
 };
 
 export default HeroSection;
 
-
 const HeroSections = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  @media (max-width: 768px) {
+  /* Hide on mobile + tablet */
+  @media (max-width: 1024px) {
     display: none;
   }
 `;
@@ -85,7 +109,9 @@ const HeroSlide = styled.div`
 
 const PromoSections = styled.div`
   display: none;
-  @media (max-width: 768px) {
+
+  /* Show only on mobile + tablet */
+  @media (max-width: 1024px) {
     display: flex;
     flex-direction: column;
   }

@@ -5,7 +5,7 @@ const Headernew = () => {
   return (
     <div
       className="position-fixed top-0 start-0 w-100 bg-white "
-      style={{ zIndex: 1 }}
+      style={{ zIndex: 9999 }}
     >
       <Header />
     </div>
