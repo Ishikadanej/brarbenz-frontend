@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
 import useProductsStore from "../../../Zustand/productStore";
 import useCartStore from "../../../Zustand/cartStore";
