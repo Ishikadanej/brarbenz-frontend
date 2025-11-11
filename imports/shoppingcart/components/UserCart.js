@@ -8,6 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import useCartStore from "../../../Zustand/cartStore";
 import EmptyCart from "./EmptyCart";
 import CartSkeleton from "./CartSkeleton";
+import styled from "styled-components";
 
 const UserCart = () => {
   const router = useRouter();
@@ -339,10 +340,10 @@ const UserCart = () => {
 
 export default UserCart;
 const Section = styled.div`
-padding-top: 100px;
-padding-bottom: 100px;
+padding-top: 70px;
+padding-bottom: 70px;
 @media (max-width: 575px) {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 `;
