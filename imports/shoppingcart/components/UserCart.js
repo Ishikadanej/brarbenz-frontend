@@ -338,3 +338,14 @@ const UserCart = () => {
 };
 
 export default UserCart;
+<<<<<<< Updated upstream
+=======
+const Section = styled.div`
+padding-top: 50px;
+padding-bottom: 70px;
+@media (max-width: 575px) {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+`;
+>>>>>>> Stashed changes

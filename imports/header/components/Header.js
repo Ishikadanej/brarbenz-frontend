@@ -22,6 +22,11 @@ const Header = () => {
   const { products } = useProductsStore();
   const { cartCount, count } = useCartStore();
   const { token, isUserLoading } = useAuth();
+<<<<<<< Updated upstream
+=======
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+>>>>>>> Stashed changes
 
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(true);
@@ -149,6 +154,7 @@ const Header = () => {
                           listStyle: "none",
                         }}
                       >
+<<<<<<< Updated upstream
                         <li
                           className={pathname === "/" ? "active" : ""}
                           onClick={() => router.push("/")}
@@ -177,6 +183,41 @@ const Header = () => {
                         >
                           Contact
                         </li>
+=======
+                        <li className={category === "shirts" ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop?category=shirts&page=1");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            SHIRTS
+                          </span>
+                        </li>
+
+                        <li className={category === "tshirts" ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop?category=tshirts&page=1");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            TSHIRTS
+                          </span>
+                        </li>
+
+                        <li className={!category ? "active" : ""}>
+                          <span
+                            onClick={() => {
+                              router.push("/shop");
+                              handleMobileMenuClose();
+                            }}
+                          >
+                            SHOP ALL
+                          </span>
+                        </li>
+
+>>>>>>> Stashed changes
                       </ul>
                     </nav>
                   </div>
@@ -190,101 +231,107 @@ const Header = () => {
                         src="/img/logo/logo1.png"
                         className="img-fluid"
                         alt="Logo"
+<<<<<<< Updated upstream
                         style={{ width: "140px", height: "auto" }}
+=======
+                        style={{ width: "100px", height: "auto" }}
+
+>>>>>>> Stashed changes
                       />
                     </span>
                   </div>
 
-
-                  <div className="header-left-icon header-left-icon4 d-flex align-items-center justify-content-end">
-                    <span
-                      ref={searchWrapRef}
-                      className="search-btn nav-search search-trigger"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleSearch();
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <Search size={22} className="d-none d-sm-block" />
-                      <Search size={18} className="d-block d-sm-none" />
-                      {isSearchOpen && (
-                        <SearchModal
-                          isSearchOpen={isSearchOpen}
-                          searchTerm={searchTerm}
-                          filteredProducts={filteredProducts}
-                          closeSearch={closeSearch}
-                          handleSearchClick={handleSearchClick}
-                          stopPropagation={(e) => e.stopPropagation()}
-                          handleSearchChange={handleSearchChange}
-                          router={router}
-                        />
-                      )}
-                    </span>
-
-                    <span
-                      ref={accountRef}
-                      style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
-                      onClick={handleProfile}
-                    >
-                      <User size={22} />
-                      {!isUserLoading && showAccount && !token && (
-                        <div
-                          className="account"
-                          style={{
-                            position: "absolute",
-                            top: "30px",
-                            right: "-45px",
-                            zIndex: 1000,
-                          }}
-                        >
-                          <Account size={22} />
-                        </div>
-                      )}
-                    </span>
-
-                    {token && (
+                  <dev className="gap-4 header-right header-right-4 d-flex align-items-center justify-content-end">
+                    <div className="header-left-icon header-left-icon4 d-flex">
                       <span
-                        onClick={() => router.push("/wishlist")}
-                        style={{ cursor: "pointer", marginLeft: "20px" }}
+                        ref={searchWrapRef}
+                        className="search-btn nav-search search-trigger"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleSearch();
+                        }}
+                        style={{ cursor: "pointer" }}
                       >
-                        <Heart size={22} />
+                        <Search size={22} className="d-none d-sm-block" />
+                        <Search size={18} className="d-block d-sm-none" />
+                        {isSearchOpen && (
+                          <SearchModal
+                            isSearchOpen={isSearchOpen}
+                            searchTerm={searchTerm}
+                            filteredProducts={filteredProducts}
+                            closeSearch={closeSearch}
+                            handleSearchClick={handleSearchClick}
+                            stopPropagation={(e) => e.stopPropagation()}
+                            handleSearchChange={handleSearchChange}
+                            router={router}
+                          />
+                        )}
                       </span>
-                    )}
 
-                    <span
-                      onClick={() => router.push("/cart")}
-                      style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
-                    >
-                      <ShoppingCart size={22} />
-                      {(token ? count : cartCount) > 0 && (
+                      <span
+                        ref={accountRef}
+                        style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
+                        onClick={handleProfile}
+                      >
+                        <User size={22} />
+                        {!isUserLoading && showAccount && !token && (
+                          <div
+                            className="account"
+                            style={{
+                              position: "absolute",
+                              top: "30px",
+                              right: "-45px",
+                              zIndex: 1000,
+                            }}
+                          >
+                            <Account size={22} />
+                          </div>
+                        )}
+                      </span>
+
+                      {token && (
                         <span
-                          style={{
-                            color: "white",
-                            backgroundColor: "#000",
-                            borderRadius: "50%",
-                            padding: "2px 6px",
-                            fontSize: "12px",
-                            position: "absolute",
-                            top: "-5px",
-                            right: "-10px",
-                          }}
+                          onClick={() => router.push("/wishlist")}
+                          style={{ cursor: "pointer", marginLeft: "20px" }}
                         >
-                          {token ? count : cartCount}
+                          <Heart size={22} />
                         </span>
                       )}
-                    </span>
-                  </div>
-                  <div className="d-block d-lg-none">
-                    <div className="hamburger-menu text-right">
+
                       <span
-                        onClick={handleMobileMenuOpen}
-                        className="menu-trigger-button"
+                        onClick={() => router.push("/cart")}
+                        style={{ cursor: "pointer", position: "relative", marginLeft: "20px" }}
                       >
-                        <i className="fa-solid fa-bars fa-xs" />
+                        <ShoppingCart size={22} />
+                        {(token ? count : cartCount) > 0 && (
+                          <span
+                            style={{
+                              color: "white",
+                              backgroundColor: "#000",
+                              borderRadius: "50%",
+                              padding: "2px 6px",
+                              fontSize: "12px",
+                              position: "absolute",
+                              top: "-5px",
+                              right: "-10px",
+                            }}
+                          >
+                            {token ? count : cartCount}
+                          </span>
+                        )}
                       </span>
                     </div>
-                  </div>
+                    <div className="d-block d-lg-none">
+                      <div className="hamburger-menu text-right">
+                        <span
+                          onClick={handleMobileMenuOpen}
+                          className="menu-trigger-button"
+                        >
+                          <i className="fa-solid fa-bars fa-xs" />
+                        </span>
+                      </div>
+                    </div>
+                  </dev>
                 </div>
               </div>
             </div>
@@ -298,6 +345,10 @@ const Header = () => {
             <i className="fa-solid fa-times" />
           </span>
         </div>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         <nav className="side-mobile-menu">
           <ul id="mobile-menu-active">
             <li className={pathname === "/" ? "active" : ""}>
