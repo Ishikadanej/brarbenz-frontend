@@ -9,13 +9,9 @@ const ConatactForm = () => {
             <div className="contact__info-head mb-40 ">
               <div className="section-title mb-20">
                 <span>Contact info</span>
-                <h4>Have Any Questins Or Emergency Problem Contact With Us.</h4>
+                <h4>Have Any Question Or Emergency Problem Contact With Us.</h4>
               </div>
-              <p>
-                Pulvinar senectus morbi quisque nunc to towa faucibus netus
-                etiam mone lestie nisi dis malesuada maecenas ora pretium ornare
-                pharetra vestibulum mattis fringilla interdum cursus curae nisi
-                pede laoreet placerat{" "}
+              <p>We are BearBenz — a men’s fashion brand offering premium shirts and t-shirts designed for comfort, style, and confidence. Feel free to reach out to us for any queries, collaborations, or support.
               </p>
             </div>
           </div>

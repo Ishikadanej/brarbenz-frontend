@@ -14,6 +14,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { Heart, Share2 } from "lucide-react";
 import ImageZoom from "./ZoomImage";
 import ProductInfoSkeleton from "./skeleton/ProductInfoSkeleton";
+import styled from "styled-components";
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -206,7 +207,7 @@ const ProductInfo = () => {
       {!product ? (
         <ProductInfoSkeleton />
       ) : (
-        <section className="product-details-area pt-120 pb-120">
+        <Section>
           <div className="container">
             <div className="row">
               <div className="col-md-7">
@@ -410,10 +411,20 @@ const ProductInfo = () => {
               </div>
             </div>
           </div>
-        </section>
+        </Section>
       )}
     </>
   );
 };
 
 export default ProductInfo;
+
+
+const Section = styled.div`
+padding-top: 50px;
+padding-bottom: 70px;
+@media (max-width: 575px) {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+`;

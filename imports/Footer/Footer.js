@@ -75,7 +75,7 @@ const Footer = () => {
                       <MapPin />
                     </div>
                     <div className="add-text">
-                      <span>184 Main Rd E, St Albans VIC 3021, Australia</span>
+                      <span>SHOP-5, PANCHSHILA SKY, Chapprabhatta, Ganeshpura, Surat, Gujarat 394520</span>
                     </div>
                   </div>
                   <div
@@ -90,7 +90,7 @@ const Footer = () => {
                       <Mail size={20} />
                     </div>
                     <div className="add-text">
-                      <span>Contact@Company.Com</span>
+                      <span>Contact@bearbenz.Com</span>
                     </div>
                   </div>
                   <div
@@ -105,7 +105,7 @@ const Footer = () => {
                       <Phone size={20} />
                     </div>
                     <div className="add-text">
-                      <span>(+02) 1800 5656 3010</span>
+                      <span>(+91) 99 79 79 66 88</span>
                     </div>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ const Footer = () => {
                     >
                       <span className="categories-footer">
                         <i className="fa-solid fa-chevron-right"></i>
-                        {item.title}
+                        {item.title.toUpperCase()}
                       </span>
                     </li>
                   ))}
@@ -167,6 +167,12 @@ const Footer = () => {
                       <i className="fa-solid fa-chevron-right"></i> Shop
                     </span>
                   </li>
+                  
+                  <li>
+                    <span onClick={() => router.push("/terms")}>
+                      <i className="fa-solid fa-chevron-right"></i> Terms & Conditions
+                    </span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -180,8 +186,7 @@ const Footer = () => {
               <div className="col-md-7 col-12">
                 <div className="copy-four-text">
                   <span>
-                    Copyright 2025 Bearbenz Theme. All Rights Reserved. Powered By
-                    Basictheme.
+                    Copyright 2025 Bearbenz Theme. All Rights Reserved.
                   </span>
                 </div>
               </div>

@@ -102,3 +102,9 @@ a {
     background-position: 50% 0;
   }
 }
+@media (max-width: 768px) {
+  .header-h-four .logo img {
+    width: 80px !important;
+    height: auto;
+  }
+}

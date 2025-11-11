@@ -59,7 +59,7 @@ export default function MobileFilterBar({ isOpen, isMobile, onToggle }) {
           left: 0;
           right: 0;
           bottom: 0;
-          z-index: 2147483000;
+          z-index: 1111;
           background: #fff;
           box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.08);
           padding: 8px 12px calc(8px + var(--sat));

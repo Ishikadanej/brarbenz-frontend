@@ -22,11 +22,8 @@ const Header = () => {
   const { products } = useProductsStore();
   const { cartCount, count } = useCartStore();
   const { token, isUserLoading } = useAuth();
-<<<<<<< Updated upstream
-=======
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
->>>>>>> Stashed changes
 
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(true);
@@ -154,36 +151,6 @@ const Header = () => {
                           listStyle: "none",
                         }}
                       >
-<<<<<<< Updated upstream
-                        <li
-                          className={pathname === "/" ? "active" : ""}
-                          onClick={() => router.push("/")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Home
-                        </li>
-                        <li
-                          className={pathname === "/about" ? "active" : ""}
-                          onClick={() => router.push("/about")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          About
-                        </li>
-                        <li
-                          className={pathname === "/shop" ? "active" : ""}
-                          onClick={() => router.push("/shop")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Shop
-                        </li>
-                        <li
-                          className={pathname === "/contact" ? "active" : ""}
-                          onClick={() => router.push("/contact")}
-                          style={{ cursor: "pointer" }}
-                        >
-                          Contact
-                        </li>
-=======
                         <li className={category === "shirts" ? "active" : ""}>
                           <span
                             onClick={() => {
@@ -217,7 +184,6 @@ const Header = () => {
                           </span>
                         </li>
 
->>>>>>> Stashed changes
                       </ul>
                     </nav>
                   </div>
@@ -231,12 +197,8 @@ const Header = () => {
                         src="/img/logo/logo1.png"
                         className="img-fluid"
                         alt="Logo"
-<<<<<<< Updated upstream
-                        style={{ width: "140px", height: "auto" }}
-=======
                         style={{ width: "100px", height: "auto" }}
 
->>>>>>> Stashed changes
                       />
                     </span>
                   </div>
@@ -345,10 +307,6 @@ const Header = () => {
             <i className="fa-solid fa-times" />
           </span>
         </div>
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         <nav className="side-mobile-menu">
           <ul id="mobile-menu-active">
             <li className={pathname === "/" ? "active" : ""}>
