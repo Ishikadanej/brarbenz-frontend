@@ -341,7 +341,21 @@ const ProductInfo = () => {
                       >
                         Add to cart
                       </button>
+                         
                     </div>
+                  
+                      <button
+                        onClick={handleAddToCart}
+                        disabled={!product?.inStock}
+                        style={{
+                          opacity: !product?.inStock ? 0.5 : 1,
+                          cursor: !product?.inStock ? "not-allowed" : "pointer",
+                        }}
+                      >
+                        Add to cart
+                      </button>
+                         
+                  
 
                     <div className="pro-wish ">
                       {token && (

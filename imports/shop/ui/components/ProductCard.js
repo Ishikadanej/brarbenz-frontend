@@ -9,11 +9,13 @@ import { useRemoveFromWishlist } from "../../../../hooks/useRemoveWishlist";
 import Cookies from "js-cookie";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Heart, ShoppingCart } from "lucide-react";
+import { useIsMobile } from "../../../../hooks/useIsMobile";
 
 const ProductCard = ({ product, shop = false }) => {
   const router = useRouter();
   const token = Cookies.get("token");
   const { user } = useAuth();
+  const isMobile = useIsMobile()
 
   const { addToCartMutation } = useAddToCart();
   const { addToWishlistMutation } = useAddToWishlist();
@@ -108,6 +110,7 @@ const ProductCard = ({ product, shop = false }) => {
             }}
             aria-label={product.title}
           ></div>
+          {!isMobile && 
           <div className="product-action text-center">
             <button
               type="button"
@@ -122,7 +125,9 @@ const ProductCard = ({ product, shop = false }) => {
               {/* <i className="fa-solid fa-cart-arrow-down"></i> */}
               <ShoppingCart />
             </button>
-          </div>
+          </div> 
+          }
+         
         </div>
 
         <div className="pro-text">

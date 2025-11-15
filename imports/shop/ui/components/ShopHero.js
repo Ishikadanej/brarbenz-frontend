@@ -55,7 +55,6 @@ const ShopHero = () => {
   const { data: productData, isLoading } = useProducts();
   const { categories: categoryData } = useCategories();
   const { sizes } = useSizes(selectedSize);
-  const { priceData } = usePrice(minPrice, maxPrice);
   const isMobile = useIsMobile();
   const [pendingRange, setPendingRange] = useState([0, 0]);
   const searchParams = useSearchParams();

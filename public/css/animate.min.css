@@ -19,6 +19,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   animation: bouncePulse 2.5s ease-in-out infinite;
 }
 
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 @keyframes bouncePulse {
   0% {
     transform: scale(1) translateY(0);

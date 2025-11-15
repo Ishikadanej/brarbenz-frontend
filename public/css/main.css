@@ -7085,18 +7085,9 @@ p.checkout-coupon input[type="text"] {
   background: #3e976c;
 }
 
-.close-mobile-menu span {
-  color: #212121;
-  position: relative;
-  z-index: 2;
-  font-size: 16px;
-  top: -10px;
-  left: 0;
-}
 
-.close-mobile-menu span:hover {
-  color: #ff0000;
-}
+
+
 
 .on-side {
   overflow: hidden;

@@ -8,6 +8,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import useCartStore from "../../../Zustand/cartStore";
 import EmptyCart from "./EmptyCart";
 import CartSkeleton from "./CartSkeleton";
+import styled from "styled-components";
 
 const UserCart = () => {
   const router = useRouter();
