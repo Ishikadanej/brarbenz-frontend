@@ -2,16 +2,26 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
-import Image from "next/image";
+import useCartStore from "../../Zustand/cartStore";
+import useAuthStore from "../../Zustand/useAuthStore";
+
+import {
+  getFirebaseAuth,
+  googleProvider,
+  popupResolver,
+} from "../../lib/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { googleLogin } from "../login/api/api";
+import { mergeGuestCart } from "../sidecart/utils";
 
 const LoginPage = () => {
-  const { loginMutation, isLoginPending } = useAuth((data) => {
-    setTimeout(() => router.push("/"), 1000);
-  });
+  const router = useRouter();
+
+  const { loginMutation, isLoginPending } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -20,7 +30,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { refetch } = useCart();
-  const router = useRouter();
+  const { cart } = useCartStore();
+  const { setToken } = useAuthStore();
 
   const handleChange = (e) => {
     setFormData({
@@ -35,8 +46,40 @@ const LoginPage = () => {
     refetch();
   };
 
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getFirebaseAuth();
+      if (!auth) throw new Error("Auth not available");
+
+      const cred = await signInWithPopup(auth, googleProvider, popupResolver);
+      const idToken = await cred.user.getIdToken();
+
+      const res = await googleLogin(idToken); // your backend exchange
+
+      if (res.token) {
+        setToken(res.token);
+
+        if (res.user) {
+          // merge guest cart on backend if any
+          await mergeGuestCart(res.user, res.token);
+          localStorage.removeItem("guest-cart");
+        }
+      }
+
+      refetch();
+      toast.success("Login successful!", { autoClose: 1000 });
+
+      // redirect after login
+      router.push("/");
+    } catch (err) {
+      console.error("Google login failed:", err?.message || err);
+      toast.error("Google login failed, try again.");
+    }
+  };
+
   return (
-   <div className="d-flex flex-column justify-content-center align-items-center bg-light text-dark p-5 vh-100">
+    <div className="d-flex flex-column justify-content-center align-items-center bg-light text-dark p-5 vh-100">
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <div className="mb-4 d-flex align-items-center">
           <div className="bg-primary p-2 rounded me-2"></div>
@@ -79,6 +122,7 @@ const LoginPage = () => {
                 type="button"
                 className="btn btn-outline-secondary"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -91,6 +135,19 @@ const LoginPage = () => {
             disabled={isLoginPending}
           >
             {isLoginPending ? "Logging in..." : "Login"}
+          </button>
+
+          <div className="divider my-3">
+            <span>or continue with</span>
+          </div>
+
+          <button
+            type="button"
+            className="btn google-btn w-100 py-2 mb-3"
+            onClick={handleGoogleLogin}
+          >
+            <i className="fa-brands fa-google me-2"></i>
+            Sign in with Google
           </button>
 
           <div className="text-center">

@@ -1,14 +1,9 @@
-// "use client";  // Remove if not needed here
-
-const Preloader = () => {
+export default function Preloader() {
   return (
-    <div id="preloader">
-      <div className="preloader">
-        <span></span>
-        <span></span>
-      </div>
-    </div>
+    <img
+      src="/assets/loader.gif"
+      alt="loading"
+      style={{ width: 100, height: 60 }}
+    />
   );
-};
-
-export default Preloader;
+}

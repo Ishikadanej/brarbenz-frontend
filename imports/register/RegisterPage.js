@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "react-toastify";
+import { useCart } from "../../hooks/useCart";
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
@@ -7,23 +9,73 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../hooks/useAuth";
 import useCartStore from "../../Zustand/cartStore";
-import Image from "next/image";
+import {
+  getFirebaseAuth,
+  googleProvider,
+  popupResolver,
+} from "../../lib/firebase";
+import { signInWithPopup } from "firebase/auth";
+import { googleLogin } from "../login/api/api";
+import { mergeGuestCart } from "../sidecart/utils";
+import useAuthStore from "../../Zustand/useAuthStore";
 
 const RegisterPage = () => {
+  const { refetch } = useCart(); 
   const router = useRouter();
   const { cart } = useCartStore();
   const searchParams = useSearchParams();
   const fromCheckout = searchParams.get("from") === "checkout";
-
+  const { setUser, user, token, setToken, logout } = useAuthStore();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [localError, setLocalError] = useState("");
 
   const { registerMutation, isRegisterPending } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    setLocalError("");
+
+    try {
+      const auth = getFirebaseAuth();
+      if (!auth) throw new Error("Auth not available on server");
+
+      const cred = await signInWithPopup(auth, googleProvider, popupResolver);
+      const idToken = await cred.user.getIdToken();
+
+      const res = await googleLogin(idToken);
+
+      if (res.token) {
+        setToken(res.token);
+
+        if (res.user) {
+          await mergeGuestCart(res.user, res.token);
+          localStorage.removeItem("guest-cart");
+        }
+      }
+
+      refetch();
+      toast.success("Login successful!", { autoClose: 1000 });
+
+      // redirect after login
+      if (fromCheckout) {
+        router.push("/checkout");
+      } else {
+        router.push("/");
+      }
+
+    } catch (err) {
+      console.error("Google login failed:", err?.message || err);
+      setLocalError("Google login failed, please try again.");
+    }
+  };
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,6 +154,20 @@ const RegisterPage = () => {
             >
               {loading || isRegisterPending ? "Registering..." : "Register"}
             </button>
+
+            <div className="divider my-3">
+              <span>or continue with</span>
+            </div>
+
+            <button
+              type="button"
+              className="btn google-btn w-100 py-2 mb-3"
+              onClick={handleGoogleLogin}
+            >
+              <i className="fa-brands fa-google me-2"></i>
+              Sign in with Google
+            </button>
+
 
             <div className="text-center">
               <p className="text-muted mb-0">

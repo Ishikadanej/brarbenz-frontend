@@ -7,6 +7,7 @@ import Preloader from "./Preloader";
 export default function PageLoaderWrapper({ children }) {
   const pathname = usePathname();
 
+  // routes where you want loader
   const routesWithLoader = [
     "/",
     "/shop",
@@ -18,38 +19,35 @@ export default function PageLoaderWrapper({ children }) {
     "/register",
   ];
 
-  const shouldShowLoader = routesWithLoader.some((route) =>
+  const matchesRoute = routesWithLoader.some((route) =>
     route === "/" ? pathname === "/" : pathname.startsWith(route)
   );
 
-  const [loading, setLoading] = useState(shouldShowLoader);
-  const [fadeOut, setFadeOut] = useState(false);
+  const [show, setShow] = useState(matchesRoute);
+  const [fade, setFade] = useState(false);
 
   useEffect(() => {
-    if (!shouldShowLoader) {
-      setLoading(false);
+    if (!matchesRoute) {
+      setShow(false);
       return;
     }
 
-    setLoading(true);
-    setFadeOut(false);
+    // Start loader every time route changes
+    setShow(true);
+    setFade(false);
 
-    const timer = setTimeout(() => {
-      setFadeOut(true);
+    const t1 = setTimeout(() => setFade(true), 700); // start fade
+    const t2 = setTimeout(() => setShow(false), 1000); // hide completely
 
-      const fadeTimer = setTimeout(() => {
-        setLoading(false);
-      }, 500);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [pathname]);
 
-      return () => clearTimeout(fadeTimer);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [pathname, shouldShowLoader]);
-
-  if (loading && shouldShowLoader) {
+  if (show) {
     return (
-      <div className={`loader-wrapper ${fadeOut ? "fade-out" : ""}`}>
+      <div className={`loader-wrapper ${fade ? "fade-out" : ""}`}>
         <Preloader />
       </div>
     );
