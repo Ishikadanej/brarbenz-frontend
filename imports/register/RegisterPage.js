@@ -20,7 +20,7 @@ import { mergeGuestCart } from "../sidecart/utils";
 import useAuthStore from "../../Zustand/useAuthStore";
 
 const RegisterPage = () => {
-  const { refetch } = useCart(); 
+  const { refetch } = useCart();
   const router = useRouter();
   const { cart } = useCartStore();
   const searchParams = useSearchParams();
@@ -95,7 +95,11 @@ const RegisterPage = () => {
       <div className="d-flex align-items-center justify-content-center bg-light p-4 p-md-5 min-vh-100">
         <div className="w-100 p-4 p-sm-0" style={{ maxWidth: 420 }}>
           <div className="mb-4 d-flex align-items-center">
-            <div className="bg-primary p-2 rounded me-2" />
+            <div
+              className="p-2 rounded me-2"
+              style={{ background: "#000" }}
+            ></div>
+
             <h5 className="mb-0 text-dark">Bearbenz</h5>
           </div>
 

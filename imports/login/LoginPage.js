@@ -82,7 +82,11 @@ const LoginPage = () => {
     <div className="d-flex flex-column justify-content-center align-items-center bg-light text-dark p-5 vh-100">
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <div className="mb-4 d-flex align-items-center">
-          <div className="bg-primary p-2 rounded me-2"></div>
+          <div
+            className="p-2 rounded me-2"
+            style={{ background: "#000" }}
+          ></div>
+
           <h5 className="mb-0">Bearbenz</h5>
         </div>
         <h2 className="fw-bold mb-2">Login to your account</h2>
