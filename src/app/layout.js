@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 import BootstrapInit from "./hooks/Bootstrap";
 import ClientLayoutWrapper from "./clientLayoutWrapper";
 import EmailProvider from "./providers/EmailProvider";
-import { Suspense } from "react"; 
+import { Suspense } from "react";
 import PageLoaderWrapper from "../../imports/loader/LoaderWrapper";
 
 const geistSans = Geist({
@@ -88,9 +88,12 @@ export default function RootLayout({ children }) {
             <SideCart />
             <ToastContainer />
             <EmailProvider>
+              <Suspense>
                 <PageLoaderWrapper>
                   <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
                 </PageLoaderWrapper>
+
+              </Suspense>
 
             </EmailProvider>
           </QueryClientProvideLayout>
