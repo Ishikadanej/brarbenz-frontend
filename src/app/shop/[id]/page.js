@@ -1,8 +1,10 @@
 import React from "react";
 import ProductDetail from "../../../../imports/productdetail/page/ProductDetail";
 
-const page = ({ params }) => {
-  const { id } = params;
+export const runtime = "edge";
+
+const Page = async ({ params }) => {
+  const { id } = await params;
 
   return (
     <div>
@@ -11,5 +13,4 @@ const page = ({ params }) => {
   );
 };
 
-export const runtime = "edge";
-export default page;
+export default Page;

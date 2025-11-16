@@ -371,8 +371,8 @@ const Header = () => {
                               padding: "2px 6px",
                               fontSize: "12px",
                               position: "absolute",
-                              top: "28px",
-                              right: "-3px",
+                              top: "8px",
+                              right: "-1px",
                             }}
                           >
                             {token ? count : cartCount}
@@ -500,7 +500,7 @@ const Header = () => {
                               padding: "2px 6px",
                               fontSize: "12px",
                               position: "absolute",
-                              top: "-16px",
+                              top: "-10px",
                               right: "-16px",
                             }}
                           >

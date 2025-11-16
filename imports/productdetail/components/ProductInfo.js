@@ -412,71 +412,7 @@ const ProductInfo = () => {
                       </CartButton>
                     </CartBtnWrapper>
                   </div>
-
-
-                  <div className="stock-update">
-                    <div className="stock-list">
-                      <ul>
-                        <li>
-                          <span>Stock :</span>{" "}
-                          <span
-                            className={`s-text ${product?.inStock ? "green" : "red"
-                              }`}
-                          >
-                            {product?.inStock ? "In Stock" : "Out of Stock"}
-                          </span>
-                        </li>
-                        <li>
-                          <span>SKU :</span>{" "}
-                          <span className="s-text">
-                            {product?.sku || "N/A"}
-                          </span>
-                        </li>
-                        <li>
-                          <span>Category :</span>{" "}
-                          <span className="s-text">
-                            {Array.isArray(product?.categories)
-                              ? product.categories
-                                .map((cat) => cat.title)
-                                .join(", ")
-                              : product?.categories || "N/A"}
-                          </span>
-                        </li>
-                        <li>
-                          <span>Tag :</span>{" "}
-                          <span className="s-text">
-                            {Array.isArray(product?.tags)
-                              ? product.tags.map((tag) => tag.title).join(", ")
-                              : product?.tags || "N/A"}
-                          </span>
-                        </li>
-                      </ul>
-                      <div
-                        className="d-flex justify-content-between align-items-center text-center my-4"
-                        style={{ maxWidth: "800px", margin: "0 auto" }}
-                      >
-                        {/* Free Delivery */}
-                        <div>
-                          <i className="fa-solid fa-truck-fast" style={{ fontSize: "30px", color: "#000" }}></i>
-                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>Free Delivery</p>
-                        </div>
-
-                        {/* Secure Checkout */}
-                        <div>
-                          <i className="fa-solid fa-shield-halved" style={{ fontSize: "30px", color: "#000" }}></i>
-                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>Secure Checkout</p>
-                        </div>
-
-                        {/* Easy Return */}
-                        <div>
-                          <i className="fa-solid fa-rotate-left" style={{ fontSize: "30px", color: "#000" }}></i>
-                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>24-Hour Return Window</p>
-                        </div>
-                      </div>
-                      <ProductDes productId={id} />
-
-                    </div>
-                  </div>
+                  <ProductDes></ProductDes>
                 </div>
               </div>
             </div>
