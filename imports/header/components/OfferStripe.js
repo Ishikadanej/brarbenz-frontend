@@ -22,9 +22,10 @@ const OfferStripe = () => {
       style={{
         overflow: "hidden",
         whiteSpace: "nowrap",
-        background: "#ff4d4d",
+        background: "#000000ff",
         color: "white",
         fontSize: "14px",
+        padding: "10px 0",
       }}
     >
       <div

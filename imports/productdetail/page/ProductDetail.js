@@ -19,7 +19,6 @@ const ProductDetail = ({ id }) => {
   return (
     <div>
       <ProductInfo productId={id} />
-      <ProductDes productId={id} />
       <ProductArea productId={id} />
     </div>
   );

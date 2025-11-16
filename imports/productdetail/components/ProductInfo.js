@@ -15,6 +15,7 @@ import { Heart, Share2 } from "lucide-react";
 import ImageZoom from "./ZoomImage";
 import ProductInfoSkeleton from "./skeleton/ProductInfoSkeleton";
 import styled from "styled-components";
+import ProductDes from "./ProductDes";
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -450,6 +451,30 @@ const ProductInfo = () => {
                           </span>
                         </li>
                       </ul>
+                      <div
+                        className="d-flex justify-content-between align-items-center text-center my-4"
+                        style={{ maxWidth: "800px", margin: "0 auto" }}
+                      >
+                        {/* Free Delivery */}
+                        <div>
+                          <i className="fa-solid fa-truck-fast" style={{ fontSize: "30px", color: "#000" }}></i>
+                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>Free Delivery</p>
+                        </div>
+
+                        {/* Secure Checkout */}
+                        <div>
+                          <i className="fa-solid fa-shield-halved" style={{ fontSize: "30px", color: "#000" }}></i>
+                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>Secure Checkout</p>
+                        </div>
+
+                        {/* Easy Return */}
+                        <div>
+                          <i className="fa-solid fa-rotate-left" style={{ fontSize: "30px", color: "#000" }}></i>
+                          <p className="mt-2 mb-0" style={{ fontSize: "14px", color: "#000" }}>24-Hour Return Window</p>
+                        </div>
+                      </div>
+                      <ProductDes productId={id} />
+
                     </div>
                   </div>
                 </div>
