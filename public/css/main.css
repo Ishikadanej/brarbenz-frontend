@@ -4160,15 +4160,6 @@ span.details-pro-price {
   padding-top: 16px;
 }
 
-.stock-update:before {
-  position: absolute;
-  content: "";
-  left: 0px;
-  top: 0px;
-  height: 1px;
-  width: 65px;
-  background: #000;
-}
 
 .stock-update .stock-list li {
   font-size: 12px;

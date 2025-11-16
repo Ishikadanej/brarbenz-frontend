@@ -48,6 +48,7 @@ export const useAuth = (onAuthSuccess) => {
     onSuccess: async (data) => {
       if (data.token) {
         setToken(data.token);
+        router.push("/");
         if (data.user) {
           await mergeGuestCart(data.user, data.token);
         }

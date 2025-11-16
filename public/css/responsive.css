@@ -1175,9 +1175,9 @@
     text-align: center;
     overflow: hidden;
   }
-  .pro-quan-area > div {
+  /* .pro-quan-area > div {
     margin-bottom: 20px;
-  }
+  } */
   .pro-cart-btn {
     float: left;
   }

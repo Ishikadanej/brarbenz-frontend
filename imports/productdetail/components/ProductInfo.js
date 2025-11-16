@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import useCartStore from "../../../Zustand/cartStore";
 import useProductsStore from "../../../Zustand/productStore";
@@ -32,6 +32,7 @@ const ProductInfo = () => {
   const { removeFromWishlist } = useRemoveFromWishlist();
   const token = Cookies.get("token");
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,6 +101,46 @@ const ProductInfo = () => {
         openCart();
         refetch?.();
         // setLocalQuantity(1);
+      },
+    });
+  };
+
+
+  const handleBuyNow = () => {
+    if (!product) return;
+
+    const selectedSizeObj =
+      product.sizes?.length > 0 && selectedSizeIndex !== null
+        ? product.sizes[selectedSizeIndex]
+        : null;
+
+    const sizeTitle = selectedSizeObj?.title || "m";
+    const sizeImageUrl =
+      selectedSizeObj?.images?.length > 0
+        ? selectedSizeObj.images[0]?.asset?.url
+        : product.images?.[0]?.asset?.url || null;
+
+    const productPayload = {
+      productId: product.id,
+      productName: product.title,
+      productImage: sizeImageUrl,
+      size: sizeTitle,
+      quantity: localQuantity,
+      price: product.price,
+    };
+
+    // IF NOT LOGGED IN → add to local cart
+    if (!token || !user) {
+      addToCart({ ...product, size: sizeTitle, quantity: localQuantity });
+      router.push("/checkout"); // ✔️ direct checkout
+      return;
+    }
+
+    // LOGGED-IN → add to DB cart
+    addToCartMutation(productPayload, {
+      onSuccess: () => {
+        refetch?.(); // optionally refresh cart count
+        router.push("/checkout"); // ✔️ direct checkout
       },
     });
   };
@@ -216,9 +257,8 @@ const ProductInfo = () => {
                     {getCurrentThumbnails().map((imgObj, index) => (
                       <li className="nav-item" key={index}>
                         <button
-                          className={`nav-link ${
-                            index === selectedImageIndex ? "active" : ""
-                          }`}
+                          className={`nav-link ${index === selectedImageIndex ? "active" : ""
+                            }`}
                           onClick={() => {
                             setSelectedImageIndex(index);
                             setMainImage(imgObj.asset?.url);
@@ -309,77 +349,69 @@ const ProductInfo = () => {
                       </div>
                     </div>
                   )}
+                  <div className="d-flex flex-column gap-4">
+                    <div className="pro-quan-area">
+                      <div className="product-quantity">
+                        <div className="cart-plus-minus">
+                          <span
+                            className="qtybutton dec"
+                            onClick={() =>
+                              setLocalQuantity((q) => (q > 1 ? q - 1 : 1))
+                            }
+                          >
+                            -
+                          </span>
+                          <input type="text" value={localQuantity} readOnly />
+                          <span
+                            className="qtybutton inc"
+                            onClick={() => setLocalQuantity((q) => q + 1)}
+                          >
+                            +
+                          </span>
+                        </div>
+                      </div>
 
-                  <div className="pro-quan-area mb-55 ">
-                    <div className="product-quantity">
-                      <div className="cart-plus-minus">
-                        <span
-                          className="qtybutton dec"
-                          onClick={() =>
-                            setLocalQuantity((q) => (q > 1 ? q - 1 : 1))
-                          }
-                        >
-                          -
-                        </span>
-                        <input type="text" value={localQuantity} readOnly />
-                        <span
-                          className="qtybutton inc"
-                          onClick={() => setLocalQuantity((q) => q + 1)}
-                        >
-                          +
-                        </span>
+
+                      <div className="pro-wish ">
+                        {token && (
+                          <button
+                            onClick={() => handleAddtoWishlist(product)}
+                            style={{
+                              border: "none",
+                              background: "transparent",
+                              cursor: "pointer",
+                            }}
+                            disabled={!token}
+                          >
+                            <Heart
+                              className=" cursor-pointer"
+                              fill={isInWishlist ? "red" : "none"}
+                              stroke={isInWishlist ? "red" : "gray"}
+                            />
+                          </button>
+                        )}
+                        <button onClick={handleShare}>
+                          <Share2 />
+                        </button>
                       </div>
                     </div>
-                    <div className="pro-cart-btn">
-                      <button
+                    <CartBtnWrapper>
+                      <CartButton
                         onClick={handleAddToCart}
                         disabled={!product?.inStock}
-                        style={{
-                          opacity: !product?.inStock ? 0.5 : 1,
-                          cursor: !product?.inStock ? "not-allowed" : "pointer",
-                        }}
                       >
                         Add to cart
-                      </button>
-                         
-                    </div>
-                  
-                      <button
-                        onClick={handleAddToCart}
-                        disabled={!product?.inStock}
-                        style={{
-                          opacity: !product?.inStock ? 0.5 : 1,
-                          cursor: !product?.inStock ? "not-allowed" : "pointer",
-                        }}
-                      >
-                        Add to cart
-                      </button>
-                         
-                  
+                      </CartButton>
 
-                    <div className="pro-wish ">
-                      {token && (
-                        <button
-                          onClick={() => handleAddtoWishlist(product)}
-                          style={{
-                            border: "none",
-                            background: "transparent",
-                            cursor: "pointer",
-                          }}
-                          disabled={!token}
-                        >
-                          <Heart
-                            className=" cursor-pointer"
-                            fill={isInWishlist ? "red" : "none"}
-                            stroke={isInWishlist ? "red" : "gray"}
-                          />
-                        </button>
-                      )}
-                      <button onClick={handleShare}>
-                        <Share2 />
-                      </button>
-                    </div>
+                      <CartButton
+                        onClick={handleBuyNow}
+                        disabled={!product?.inStock}
+                      >
+                        Buy Now
+                      </CartButton>
+                    </CartBtnWrapper>
                   </div>
+
 
                   <div className="stock-update">
                     <div className="stock-list">
@@ -387,9 +419,8 @@ const ProductInfo = () => {
                         <li>
                           <span>Stock :</span>{" "}
                           <span
-                            className={`s-text ${
-                              product?.inStock ? "green" : "red"
-                            }`}
+                            className={`s-text ${product?.inStock ? "green" : "red"
+                              }`}
                           >
                             {product?.inStock ? "In Stock" : "Out of Stock"}
                           </span>
@@ -405,8 +436,8 @@ const ProductInfo = () => {
                           <span className="s-text">
                             {Array.isArray(product?.categories)
                               ? product.categories
-                                  .map((cat) => cat.title)
-                                  .join(", ")
+                                .map((cat) => cat.title)
+                                .join(", ")
                               : product?.categories || "N/A"}
                           </span>
                         </li>
@@ -440,5 +471,55 @@ padding-bottom: 70px;
 @media (max-width: 575px) {
   padding-top: 30px;
   padding-bottom: 50px;
+}
+`;
+
+const CartBtnWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+//   margin-left: 10px;
+//   @media (max-width: 768px) {
+//     margin-left: 0px;
+// }
+`;
+
+const CartButton = styled.button`
+  line-height: 51px;
+  padding: 0px 60px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  background: #000;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+
+  @media (max-width: 1500px) {
+    padding: 0px 30px;
+  }
+
+  // @media (max-width: 1088px) {
+  //   margin-left: 10px;
+  // }
+
+  @media (max-width: 900px) {
+    padding: 10px 20px;
+    line-height: 28px;
+  }
+
+//   @media (max-width: 768px) {
+//     margin-left: 0px;  
+// }
+  @media (max-width: 600px) {
+    line-height: 36px;
+    padding: 0px 50px;
+  }
+    @media (max-width: 400px) {
+    padding: 0px 20px;
 }
 `;

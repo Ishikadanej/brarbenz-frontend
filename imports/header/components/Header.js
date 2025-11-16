@@ -363,7 +363,20 @@ const Header = () => {
             <span onClick={() => router.push("/cart")}>
               <ShoppingCart size={22} />
               {(token ? count : cartCount) > 0 && (
-                <CartBadge>{token ? count : cartCount}</CartBadge>
+               <span
+                            style={{
+                              color: "white",
+                              backgroundColor: "#000",
+                              borderRadius: "50%",
+                              padding: "2px 6px",
+                              fontSize: "12px",
+                              position: "absolute",
+                              top: "28px",
+                              right: "-3px",
+                            }}
+                          >
+                            {token ? count : cartCount}
+                          </span>
               )}
             </span>
           </MobileRight>
@@ -479,7 +492,20 @@ const Header = () => {
                       <span onClick={() => router.push("/cart")}>
                         <ShoppingCart size={22} />
                         {(token ? count : cartCount) > 0 && (
-                          <CartBadge>{token ? count : cartCount}</CartBadge>
+                          <span
+                            style={{
+                              color: "white",
+                              backgroundColor: "#000",
+                              borderRadius: "50%",
+                              padding: "2px 6px",
+                              fontSize: "12px",
+                              position: "absolute",
+                              top: "-16px",
+                              right: "-16px",
+                            }}
+                          >
+                            {token ? count : cartCount}
+                          </span>
                         )}
                       </span>
                     </IconGroup>
@@ -497,10 +523,6 @@ const Header = () => {
           </div>
         </HeaderMenu>
       </HeaderWrapper>
-
-      {/* Mobile Slide Menu */}
-
-
       {/* Overlay */}
     </>
   );
