@@ -174,7 +174,7 @@ const TopFeaturePro = ({ data }) => {
               </div>
             )}
 
-            {topProducts.slice(0, 3).map((product, index) => {
+            {topProducts.map((product, index) => {
               const isInWishlist = wishlist?.some(
                 (item) => item.product.id === product.id
               );

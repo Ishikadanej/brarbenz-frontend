@@ -209,12 +209,16 @@ color: #000;
 }
 `;
 
+
+
+
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isHome,setIsHome] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showAccount, setShowAccount] = useState(false);
   const searchWrapRef = useRef(null);
@@ -225,6 +229,13 @@ const Header = () => {
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
 
+
+  useEffect(() => {
+    if(pathname !== "/shop") {
+      setIsHome(true);
+    }
+  }, [pathname]);
+  
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(true);
     document.body.classList.add("on-side");
@@ -363,20 +374,11 @@ const Header = () => {
             <span onClick={() => router.push("/cart")}>
               <ShoppingCart size={22} />
               {(token ? count : cartCount) > 0 && (
-               <span
-                            style={{
-                              color: "white",
-                              backgroundColor: "#000",
-                              borderRadius: "50%",
-                              padding: "2px 6px",
-                              fontSize: "12px",
-                              position: "absolute",
-                              top: "8px",
-                              right: "-1px",
-                            }}
+               <Badge isHome={isHome}
+                            
                           >
                             {token ? count : cartCount}
-                          </span>
+                          </Badge>
               )}
             </span>
           </MobileRight>
@@ -529,3 +531,18 @@ const Header = () => {
 };
 
 export default Header;
+
+const Badge = styled.span`
+  color: white;
+  background-color: #000;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  position: absolute;
+  top: 8px;
+  right: -1px;
+
+  @media (max-width: 678px) {
+    top: ${(props) => (props.isHome ? "45px" : "8px")};
+  }
+`;
